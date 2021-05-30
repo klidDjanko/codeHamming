@@ -7,6 +7,8 @@
             string result = "";
             switch(charEng)
             {
+                case " ": result = "00000";
+                    break;
                 case "a": result = "00001";
                     break;
                 case "b": result = "00010";
