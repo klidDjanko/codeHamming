@@ -45,6 +45,7 @@ namespace codeHamming
 
                 //Выводим полученное значение кода на консоль
                 foreach(string ch in codeHamming) Console.Write(ch);
+                Console.Write(" ");
             }
         }
 
