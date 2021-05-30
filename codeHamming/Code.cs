@@ -16,48 +16,41 @@ namespace codeHamming
                 EnglishAlph english = new EnglishAlph();
                 string binary = english.CharToBinary(input[s].ToString());
                 //Console.WriteLine("Код символа в бинарном виде: {0}", binary);
-                //Кодируем, заполняем информационные биты кода Хемминга (9.4)
+
+                //Кодируем, заполняем информационные биты кода Хемминга (9,4)
+                //Массив для хранения кода
                 string[] codeHamming = new string[binary.Length + 4];
 
-                //Заполняем блоки с проверочными битами
-                for(int j = 0; j < codeHamming.Length; j++)
+                for (int i = 0; i < codeHamming.Length; i++)
                 {
-                    if (Math.Log(j + 1, 2) % 1 == 0)
+                    if (i < 5)
                     {
-                        if (j + 1 == 1) codeHamming[j] = Xor(binary[1].ToString(), binary[2].ToString());
-                        if (j + 1 == 2) codeHamming[j] = Xor(Xor(binary[0].ToString(), binary[2].ToString()), binary[3].ToString());
-                        if (j + 1 == 4) codeHamming[j] = Xor(Xor(binary[1].ToString(), binary[3].ToString()), binary[4].ToString());
-                        if (j + 1 == 8) codeHamming[j] = Xor(Xor(binary[0].ToString(), binary[1].ToString()), binary[4].ToString());
+                        codeHamming[i] = binary[i].ToString();
                     }
-                }
-                //Заполняем блоки с информационными битами
-                for (int i = 0; i < binary.Length; i++)
-                {
-                    for (int j = 0; j < codeHamming.Length; j++)
+                    else
                     {
-                        if (Math.Log(j + 1, 2) % 1 != 0 && codeHamming[j] == null)
-                        {
-                            codeHamming[j] = binary[i].ToString();
-                            break;
-                        }
+                        if (i == 5) codeHamming[i] = Xor(binary[1].ToString(), binary[2].ToString());
+                        if (i == 6) codeHamming[i] = Xor(Xor(binary[0].ToString(), binary[2].ToString()), binary[3].ToString());
+                        if (i == 7) codeHamming[i] = Xor(Xor(binary[1].ToString(), binary[3].ToString()), binary[4].ToString());
+                        if (i == 8) codeHamming[i] = Xor(Xor(binary[0].ToString(), binary[1].ToString()), binary[4].ToString());
                     }
                 }
 
                 //Выводим полученное значение кода на консоль
-                foreach(string ch in codeHamming) Console.Write(ch);
+                foreach (string ch in codeHamming) Console.Write(ch);
                 Console.Write(" ");
             }
+
+            Console.WriteLine();
         }
 
         //Бинарная операция исключающее ИЛИ - XOR
-        string Xor(string a, string b)
+        public string Xor(string a, string b)
         {
             string result = "0";
             if (a == "0" && b == "0" || a == "1" && b == "1") result = "0";
             else result = "1";
             return result;
         }
-
-
     }
 }
